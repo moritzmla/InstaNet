@@ -1,0 +1,66 @@
+﻿@using Microsoft.AspNetCore.Identity
+@using InstaNet.DataAccess.Identity
+@inject UserManager<ApplicationUser> UserManager
+
+@{
+    ApplicationUser CurrentProfil = null;
+
+    if (User.Identity.IsAuthenticated)
+    {
+        CurrentProfil = await UserManager.FindByNameAsync(User.Identity.Name);
+    }
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+
+    <link rel="stylesheet" href="~/css/Main.css" />
+
+    <title>InstaNet</title>
+</head>
+
+<body>
+    <header>
+        <div class="header-container">
+            <div class="logo">
+                <a asp-page="/Index"><img src="~/images/Logo.png" alt="LOGO" height="30" width="42" /></a>
+            </div>
+
+            <div class="branding">
+                <a asp-page="/Index"><h1>InstaNet</h1></a>
+            </div>
+
+            @if (User.Identity.IsAuthenticated)
+            {
+                <div class="searchbar">
+                    <input style="text-align: center;" type="text" placeholder="Suchen" />
+                </div>
+
+                <div class="profil">
+                    <div class="row-container">
+                        <img src="~/Images/Explorer.png" alt="Explorer" height="36" width="40" />
+                        <img src="~/images/Notification.png" alt="Notification" height="32" width="40" />
+                        <a asp-page="/Account/Profil" asp-route-id="@CurrentProfil.ProfilId"><img src="~/images/User.png" alt="User" height="34" width="40" /></a>
+                    </div>
+                </div>
+            }
+        </div>
+    </header>
+
+    <div class="main-container">
+        <div class="column-container" style="width: 100%;">
+            @RenderBody()
+        </div>
+    </div>
+
+    <footer>
+        <a href="https://github.com/cetoxx/InstaNet"><strong>InstaNet on Github</strong></a>
+    </footer>
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+    <script src="~/js/JavaScript.js"></script>
+</body>
+</html>

@@ -1,0 +1,39 @@
+﻿@page
+@model InstaNet.Web.Pages.Account.RegisterModel
+@{
+    ViewData["Title"] = "Register";
+}
+
+<div class="content-container column-container" style="width: 100%; margin: auto; max-width: 350px">
+    <form method="post">
+        <h1 style="text-align: center; font-size: 25px; margin-bottom: 50px">InstaNet</h1>
+        <div class="form-group">
+            <label asp-for="RegisterViewModel.Email"></label>
+            <input asp-for="RegisterViewModel.Email" placeholder="Email" />
+        </div>
+
+        <div class="form-group">
+            <label asp-for="RegisterViewModel.UserName"></label>
+            <input asp-for="RegisterViewModel.UserName" placeholder="Password" />
+        </div>
+
+        <div class="form-group">
+            <label asp-for="RegisterViewModel.Password"></label>
+            <input asp-for="RegisterViewModel.Password" placeholder="Password" />
+        </div>
+
+        <div class="form-group">
+            <label asp-for="RegisterViewModel.ConfirmPassword"></label>
+            <input asp-for="RegisterViewModel.ConfirmPassword" placeholder="Password" />
+        </div>
+
+        <input class="click-link" type="submit" value="Register" />
+
+        <div class="errors" asp-validation-summary="All"></div>
+    </form>
+
+    <hr />
+
+    <a asp-page="/Account/Login" class="click-link" style="text-align: center; padding: 10px">Have an account? Login...</a>
+</div>
+

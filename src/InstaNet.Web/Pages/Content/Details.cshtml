@@ -1,0 +1,61 @@
+﻿@page "{id}"
+@model InstaNet.Web.Pages.Content.DetailsModel
+@{
+    ViewData["Title"] = "Details";
+}
+
+<div class="post-container" style="margin: auto;">
+    <div class="row-container" style="">
+        <div class="column-container">
+            <img class="main-img" src="data:image;base64,@System.Convert.ToBase64String(Model.Post.Pictures.First().File)" style="margin: auto; max-width: 600px; max-height: 600px" />
+        </div>
+
+        <div style="min-width: 335px; border: 1px solid rgba(0,0,0,.0975)">
+
+            <div class="row-container" style="padding: 7px; border-bottom: 1px solid rgba(0,0,0,.0975)">
+                <img src="data:image;base64,@System.Convert.ToBase64String(Model.Post.Profil.Image)" height="35" width="35" style="border-radius: 50px; margin: 3px; margin-left: 10px" />
+                <a asp-page="/Account/Profil" asp-route-id="@Model.Post.Profil.Id">@Model.Post.Profil.UserName</a>
+            </div>
+
+            <div>
+                <div class="column-container" style="max-height: 320px; overflow: auto;">
+
+                    <div class="column-container" style="margin-top: 10px;">
+                        <div class="row-container">
+                            <img src="data:image;base64,@System.Convert.ToBase64String(Model.Post.Profil.Image)" height="30" width="30" style="border-radius: 50px; margin-left: 18px" />
+                            <a style="margin-top: 7px;" asp-page="/Account/Profil" asp-route-id="@Model.Post.Profil.Id">@Model.Post.Profil.UserName</a>
+                            <p style="margin-top: 7px;">@Model.Post.Caption</p>
+                        </div>
+                    </div>
+
+                    @foreach (var replay in Model.Post.Replays.OrderBy(x => x.Created))
+                    {
+                        <div class="column-container" style="margin-top: 10px;">
+                            <div class="row-container">
+                                <img src="data:image;base64,@System.Convert.ToBase64String(replay.Profil.Image)" height="30" width="30" style="border-radius: 50px; margin-left: 18px" />
+                                <a style="margin-top: 7px;" asp-page="/Account/Profil" asp-route-id="@replay.Profil.Id">@replay.Profil.UserName</a>
+                                <p style="margin-top: 7px;">@replay.Text</p>
+                            </div>
+                            <p style="color: lightgray; margin-left: 65px; margin-top: 5px; font-size: 12px">@replay.TimeAgo()</p>
+                        </div>
+                    }
+                </div>
+
+                <div class="row-container" style="margin-top: 10px;">
+                    <hr />
+                    <a><strong>@Model.Post.Likes.Count Likes</strong></a>
+                    <a style="margin-top: 8px" class="click-link" asp-page="/Index" asp-page-handler="Like" asp-route-id="@Model.Post.Id">Like</a>
+                </div>
+
+                <div class="column-container" style="padding-bottom: 2.5px; margin-top: 3px; bottom: 2px">
+                    <hr />
+                    <form class="row-container" method="post" asp-page-handler="Replay" asp-route-id="@Model.Post.Id">
+                        <input asp-for="Replay.Text" placeholder="Add a comment..." style="margin-top: 3px; border: none; width: 80%; text-align: left; padding: 15px;" />
+                        <button class="click-link" style="margin-right: 28px;">Post</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
