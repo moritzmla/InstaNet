@@ -7,20 +7,20 @@
 
 @{
     ViewData["Title"] = "New";
-    var CurrentProfil = await UserManager.FindByNameAsync(User.Identity.Name);
+    var CurrentProfile = await UserManager.FindByNameAsync(User.Identity.Name);
 }
 
-<div class="post-container" style="width: 70%; margin: auto;">
+<div class="post-container">
     <div class="column-container">
         <div class="row-container" style="padding: 7px; border: 1px solid rgba(0,0,0,.0975)">
-            <a style="margin-top: 0px" asp-page="/Account/Profil" asp-route-id="@CurrentProfil.Profil.Id"><img src="data:image;base64,@System.Convert.ToBase64String(CurrentProfil.Profil.Image)" height="35" width="35" style="border-radius: 50px; margin: 3px; margin-left: 10px" /></a>
-            <a asp-page="/Account/Profil" asp-route-id="@CurrentProfil.Profil.Id">@CurrentProfil.Profil.UserName</a>
+            <a style="margin-top: 0px" asp-page="/Account/Profile" asp-route-id="@CurrentProfile.Profile.Id"><img src="data:image;base64,@System.Convert.ToBase64String(CurrentProfile.Profile.Image)" height="35" width="35" style="border-radius: 50px; margin: 3px; margin-left: 10px" /></a>
+            <a asp-page="/Account/Profile" asp-route-id="@CurrentProfile.Profile.Id">@CurrentProfile.Profile.UserName</a>
         </div>
 
-        <form method="post" asp-route-id="@CurrentProfil.ProfilId" asp-page-handler="New" enctype="multipart/form-data" style="margin: 0px;">
+        <form method="post" asp-route-id="@CurrentProfile.ProfileId" asp-page-handler="New" enctype="multipart/form-data" style="margin: 0px;">
             <div class="column-container" style="margin: 0px;">
                 <label for="imageInput" style="margin: 0px;">
-                    <img class="main-img" id="imageDisplay" src="~/images/Select.png" alt="COVER" height="600" width="600" style="object-fit: scale-down; margin: 0px;" />
+                    <img class="main-img" id="imageDisplay" src="~/images/Select.png" alt="COVER" style="margin: 0px;" />
                     <input asp-for="PostViewModel.Picture" id="imageInput" />
                 </label>
             </div>

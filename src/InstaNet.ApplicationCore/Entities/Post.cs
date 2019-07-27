@@ -11,7 +11,7 @@ namespace InstaNet.ApplicationCore.Entities
         private ICollection<Video> _videos;
         private ICollection<Replay> _replays;
         private ICollection<Like> _likes;
-        private Profil _profil;
+        private Profile _profile;
 
         public Post()
         {
@@ -26,11 +26,11 @@ namespace InstaNet.ApplicationCore.Entities
 
         public string Caption { get; set; }
 
-        public Guid? ProfilId { get; set; }
-        public Profil Profil
+        public Guid? ProfileId { get; set; }
+        public Profile Profile
         {
-            get => this.LazyLoader.Load(this, ref _profil);
-            set => _profil = value;
+            get => this.LazyLoader.Load(this, ref _profile);
+            set => _profile = value;
         }
 
         public ICollection<Like> Likes

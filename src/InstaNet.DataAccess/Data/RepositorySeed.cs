@@ -9,22 +9,22 @@ namespace InstaNet.DataAccess.Data
 {
     public class RepositorySeed
     {
-        private static Profil profil;
+        private static Profile profile;
         private static Post post;
 
-        public static async Task<Profil> CreateSeed(RepositoryContext repositoryContext)
+        public static async Task<Profile> CreateSeed(RepositoryContext repositoryContext)
         {
-            await repositoryContext.Profils.AddRangeAsync(GetSeedProfils());
+            await repositoryContext.Profiles.AddRangeAsync(GetSeedProfils());
             await repositoryContext.Posts.AddRangeAsync(GetSeedPosts());
             await repositoryContext.Pictures.AddRangeAsync(GetSeedPictures());
             await repositoryContext.Replays.AddRangeAsync(GetSeedReplays());
 
-            return profil;
+            return profile;
         }
 
-        private static IList<Profil> GetSeedProfils()
+        private static IList<Profile> GetSeedProfils()
         {
-            profil = new Profil
+            profile = new Profile
             {
                 Id = Guid.NewGuid(),
                 UserName = "Moritz Müller",
@@ -33,9 +33,9 @@ namespace InstaNet.DataAccess.Data
                 Image = File.ReadAllBytes(".//wwwroot//Images//SampleUser.PNG")
             };
 
-            var seedList = new List<Profil>
+            var seedList = new List<Profile>
             {
-                profil
+                profile
             };
 
             return seedList;
@@ -45,7 +45,7 @@ namespace InstaNet.DataAccess.Data
         {
             post = new Post
             {
-                Profil = profil,
+                Profile = profile,
                 Caption = "The First Post"
             };
 
@@ -76,7 +76,7 @@ namespace InstaNet.DataAccess.Data
                 new Replay
                 {
                     Post = post,
-                    Profil = profil,
+                    Profile = profile,
                     Text = "The First Replay"
                 }
             };

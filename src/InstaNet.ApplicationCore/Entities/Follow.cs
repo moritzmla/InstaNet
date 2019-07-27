@@ -7,8 +7,8 @@ namespace InstaNet.ApplicationCore.Entities
 {
     public class Follow : BaseEntity
     {
-        private Profil _follower;
-        private Profil _following;
+        private Profile _follower;
+        private Profile _following;
 
         public Follow()
         {
@@ -22,14 +22,14 @@ namespace InstaNet.ApplicationCore.Entities
         }
 
         public Guid? FollowerId { get; set; }
-        public Profil Follower
+        public Profile Follower
         {
             get => this.LazyLoader.Load(this, ref _follower);
             set => _follower = value;
         }
 
         public Guid? FollowingId { get; set; }
-        public Profil Following
+        public Profile Following
         {
             get => this.LazyLoader.Load(this, ref _following);
             set => _following = value;

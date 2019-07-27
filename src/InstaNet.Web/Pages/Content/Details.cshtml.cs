@@ -41,7 +41,7 @@ namespace InstaNet.Web.Pages.Content
                 var currentUser = await this.userManager.FindByNameAsync(User.Identity.Name);
 
                 this.Replay.Id = Guid.NewGuid();
-                this.Replay.Profil = currentUser.Profil;
+                this.Replay.Profile = currentUser.Profile;
                 this.Replay.Post = this.repositoryContext.Posts.FirstOrDefault(x => x.Id.ToString() == id);
                 this.Replay.Created = DateTime.Now;
                 this.Replay.Modified = DateTime.Now;

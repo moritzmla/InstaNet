@@ -43,7 +43,7 @@ namespace InstaNet.Web.Pages.Content
                 {
                     Id = Guid.NewGuid(),
                     Caption = PostViewModel.Caption,
-                    ProfilId = Guid.Parse(id),
+                    ProfileId = Guid.Parse(id),
                     Created = DateTime.Now,
                     Modified = DateTime.Now
                 };

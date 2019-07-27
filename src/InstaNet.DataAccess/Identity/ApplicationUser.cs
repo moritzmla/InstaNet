@@ -9,7 +9,7 @@ namespace InstaNet.DataAccess.Identity
 {
     public class ApplicationUser : IdentityUser
     {
-        private Profil _profil;
+        private Profile _profile;
 
         public ApplicationUser()
         {
@@ -22,11 +22,11 @@ namespace InstaNet.DataAccess.Identity
             this.LazyLoader = lazyLoader;
         }
 
-        public Guid? ProfilId { get; set; }
-        public Profil Profil
+        public Guid? ProfileId { get; set; }
+        public Profile Profile
         {
-            get => this.LazyLoader.Load(this, ref _profil);
-            set => _profil = value;
+            get => this.LazyLoader.Load(this, ref _profile);
+            set => _profile = value;
         }
     }
 }

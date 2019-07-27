@@ -28,17 +28,17 @@ namespace InstaNet.Web.Pages.Account
         }
 
         [BindProperty]
-        public Profil Profil { get; set; }
+        public Profile Profile { get; set; }
 
         [BindProperty]
-        public ProfilViewModel ProfilViewModel { get; set; }
+        public ProfileViewModel ProfilViewModel { get; set; }
 
         public async Task<IActionResult> OnGet(string id)
         {
-            this.Profil = await this.repositoryContext.Profils.FindAsync(Guid.Parse(id));
+            this.Profile = await this.repositoryContext.Profiles.FindAsync(Guid.Parse(id));
             var currentUser = await this.userManager.FindByNameAsync(User.Identity.Name);
 
-            if (currentUser.ProfilId != this.Profil.Id)
+            if (currentUser.ProfileId != this.Profile.Id)
             {
                 return RedirectToPage("/Index");
             }
@@ -50,7 +50,7 @@ namespace InstaNet.Web.Pages.Account
         {
             if (ModelState.IsValid)
             {
-                var editProfil = await this.repositoryContext.Profils.FindAsync(Guid.Parse(id));
+                var editProfil = await this.repositoryContext.Profiles.FindAsync(Guid.Parse(id));
 
                 editProfil.DisplayName = this.ProfilViewModel.DisplayName;
                 editProfil.Bio = this.ProfilViewModel.Bio;
@@ -61,11 +61,11 @@ namespace InstaNet.Web.Pages.Account
                     editProfil.Image = FileToByteArray(this.ProfilViewModel.Image);
                 }
 
-                this.repositoryContext.Profils.Update(editProfil);
+                this.repositoryContext.Profiles.Update(editProfil);
 
                 await this.repositoryContext.SaveChangesAsync();
 
-                return RedirectToPage("/Account/Profil", new { Id = id });
+                return RedirectToPage("/Account/Profile", new { Id = id });
             }
             return RedirectToPage("/Account/Settings", new { Id = id });
         }

@@ -29,21 +29,16 @@ namespace InstaNet.Web.Pages
         public IReadOnlyList<Post> Timeline { get; set; }
 
         [BindProperty]
-        public IReadOnlyList<Profil> Suggestions { get; set; }
-
-        [BindProperty]
         public Replay Replay { get; set; }
 
         public async Task<IActionResult> OnGet()
         {
             var currentUser = await this.userManager.FindByNameAsync(User.Identity.Name);
-            var following = currentUser.Profil.Following.Select(x => x.FollowerId);
+            var following = currentUser.Profile.Following.Select(x => x.FollowerId);
 
             this.Timeline = this.repositoryContext.Posts
-                .Where(x => following.Contains(x.ProfilId) || x.ProfilId == currentUser.ProfilId)
+                .Where(x => following.Contains(x.ProfileId) || x.ProfileId == currentUser.ProfileId)
                 .Take(20).ToList();
-
-            this.Suggestions = this.repositoryContext.Profils.OrderBy(x => Guid.NewGuid()).Take(5).ToList();
 
             return Page();
         }
@@ -55,7 +50,7 @@ namespace InstaNet.Web.Pages
                 var currentUser = await this.userManager.FindByNameAsync(User.Identity.Name);
 
                 this.Replay.Id = Guid.NewGuid();
-                this.Replay.Profil = currentUser.Profil;
+                this.Replay.Profile = currentUser.Profile;
                 this.Replay.Post = this.repositoryContext.Posts.FirstOrDefault(x => x.Id.ToString() == id);
 
                 await this.repositoryContext.Replays.AddAsync(Replay);
@@ -70,7 +65,7 @@ namespace InstaNet.Web.Pages
             var currentUser = await this.userManager.FindByNameAsync(User.Identity.Name);
 
             var result = this.repositoryContext.Likes
-                .FirstOrDefault(x => x.ProfilId == currentUser.ProfilId && x.PostId == Guid.Parse(id));
+                .FirstOrDefault(x => x.ProfileId == currentUser.ProfileId && x.PostId == Guid.Parse(id));
 
             if (result == null)
             {
@@ -78,7 +73,7 @@ namespace InstaNet.Web.Pages
                 {
                     Id = Guid.NewGuid(),
                     PostId = Guid.Parse(id),
-                    ProfilId = currentUser.Profil.Id
+                    ProfileId = currentUser.Profile.Id
                 });
             } else
             {

@@ -7,7 +7,7 @@ namespace InstaNet.ApplicationCore.Entities
 {
     public class Like : BaseEntity
     {
-        private Profil _profil;
+        private Profile _profile;
         private Post _post;
 
         public Like()
@@ -21,11 +21,11 @@ namespace InstaNet.ApplicationCore.Entities
             this.LazyLoader = lazyLoader;
         }
 
-        public Guid? ProfilId { get; set; }
-        public Profil Profil
+        public Guid? ProfileId { get; set; }
+        public Profile Profile
         {
-            get => this.LazyLoader.Load(this, ref _profil);
-            set => _profil = value;
+            get => this.LazyLoader.Load(this, ref _profile);
+            set => _profile = value;
         }
 
         public Guid? PostId { get; set; }

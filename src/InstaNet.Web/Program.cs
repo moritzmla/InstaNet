@@ -25,7 +25,7 @@ namespace InstaNet.Web
 
             using (var scope = host.Services.CreateScope())
             {
-                Profil profil = null;
+                Profile profil = null;
 
                 using (var repositoryContext = scope.ServiceProvider.GetService<RepositoryContext>())
                 {

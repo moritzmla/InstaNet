@@ -3,108 +3,66 @@
 
 @using Microsoft.AspNetCore.Identity
 @using InstaNet.DataAccess.Identity
+@using InstaNet.DataAccess.Data
+
 @inject UserManager<ApplicationUser> UserManager
+@inject RepositoryContext repositoryContext; 
 
 @{
     ViewData["Title"] = "Index";
+
     var CurrentProfil = await UserManager.FindByNameAsync(User.Identity.Name);
+
+    var Suggestions = this.repositoryContext.Profiles.OrderBy(x => Guid.NewGuid()).Take(5).ToList();
 }
 
-<div class="row-container" style="width: 100%;">
-    <div class="column-container" style="width: 100%;">
-        @if (Model.Timeline.Any())
+<div class="column-container">
+    <div class="content-container" style="padding: 10px; margin-bottom: 10px">
+        <a style="margin-left: 8px" class="click-link" asp-page="/Content/New" asp-page-handler="New">New Post</a>
+    </div>
+
+    @if (Model.Timeline.Any())
+    {
+        @foreach (var post in Model.Timeline.OrderBy(x => x.Created))
         {
-            @foreach (var post in Model.Timeline.OrderBy(x => x.Created))
-            {
-                <div class="post-container">
+            <div class="post-container">
+                <div class="column-container">
                     <div class="column-container">
-                        <div class="row-container" style="padding: 7px; border: 1px solid rgba(0,0,0,.0975)">
-                            <a style="margin-top: 0px" asp-page="/Account/Profil" asp-route-id="@post.Profil.Id"><img src="data:image;base64,@System.Convert.ToBase64String(post.Profil.Image)" height="35" width="35" style="border-radius: 50px; margin: 3px; margin-left: 10px" /></a>
-                            <a asp-page="/Account/Profil" asp-route-id="@post.Profil.Id">@post.Profil.UserName</a>
-                        </div>
+                        <img class="main-img" src="data:image;base64,@System.Convert.ToBase64String(post.Pictures.First().File)" />
+                    </div>
 
-                        <div class="column-container">
-                            <img class="main-img" src="data:image;base64,@System.Convert.ToBase64String(post.Pictures.First().File)" height="600" width="600" style="margin: auto;" />
-                        </div>
-
-                        <div style="border: 1px solid rgba(0,0,0,.0975)">
+                    <div style="border: 1px solid rgba(0,0,0,.0975); padding: 3px;">
+                        <div class="row-container">
+                            <a style="margin-top: 2px" asp-page="/Account/Profil" asp-route-id="@post.Profile.Id"><img src="data:image;base64,@System.Convert.ToBase64String(post.Profile.Image)" height="40" width="40" style="border-radius: 50px; margin: 3px; margin-left: 10px" /></a>
                             <div class="column-container">
-
-                                <div class="row-container" style="margin-top: 10px;">
-                                    <a><strong>@post.Likes.Count Likes</strong></a>
-                                    <a style="margin-top: 8px" class="click-link" asp-page-handler="Like" asp-route-id="@post.Id">Like</a>
-                                </div>
-
                                 <div class="row-container">
-                                    <a style="margin-top: 3px" asp-page="/Account/Profil" asp-route-id="@post.Profil.Id">@post.Profil.UserName</a>
-                                    <p style="margin-top: 3px">@post.Caption</p>
+                                    <a style="margin-top: 8px; margin-left: 15px;" asp-page="/Account/Profil" asp-route-id="@post.Profile.Id">@post.Profile.UserName</a>
+                                    <p style="margin-top: 8px;">•</p>
+                                    <p style="margin-top: 8px;">@post.TimeAgo()</p>
                                 </div>
-
-                                <div class="row-container">
-                                    @if (post.Replays.Any())
-                                    {
-                                        <div class="row-container" style=" padding-bottom: 10px;">
-                                            <a asp-page="/Content/Details" asp-route-id="@post.Id" style="color: gray; font-weight: 100; margin-top: 10px;">View all @post.Replays.Count Comments</a>
-                                        </div>
-                                    }
-                                </div>
-
-                                @foreach (var replay in post.Replays.Take(2))
-                                {
-                                    <div class="row-container">
-                                        <a style="margin-top: 0px;" asp-page="/Account/Profil" asp-route-id="@replay.Profil.Id">@replay.Profil.UserName</a>
-                                        <p style="margin-top: 0px;">@replay.Text</p>
-                                    </div>
-                                }
+                                <p style="margin-left: 15px; margin-top: 5px">@post.Caption</p>
                             </div>
+                        </div>
 
-                            <div class="column-container" style="padding-bottom: 2.5px; margin-top: 3px">
-                                <hr />
-                                <form class="row-container" method="post" asp-page-handler="Replay" asp-route-id="@post.Id">
-                                    <input asp-for="Replay.Text" placeholder="Add a comment..." style="margin-top: 3px; border: none; width: 80%; text-align: left; padding: 15px;" />
-                                    <button class="click-link" style="margin-left: 28px;">Post</button>
-                                </form>
-                            </div>
+                        <div class="row-container">
+                            <a style="margin-top: 7px" class="click-link" asp-page-handler="Like" asp-route-id="@post.Id"><strong>@post.Likes.Count</strong> Likes</a>
+                            <a asp-page="/Content/Details" asp-route-id="@post.Id" style="color: gray; font-weight: 100; margin-top: 12px; margin-left: 10px;">@post.Replays.Count Comments</a>
+
+                            <form class="row-container" method="post" asp-page-handler="Replay" asp-route-id="@post.Id" style="margin-left: 10px;">
+                                <input asp-for="Replay.Text" placeholder="Add a comment..." style="background-color: #F0F0F0; border: none; width: 390px; text-align: left; padding: 9px;" />
+                                <button class="click-link" style="margin-left: 28px;">Post</button>
+                            </form>
                         </div>
                     </div>
                 </div>
-            }
-        } else
-        {
-            <div class="content-container" style="width: 90%;">
-                <p>nothing here follow people or post by your self</p>
-                <a style="margin-top: 8px; margin-left: 8px" class="click-link" asp-page="/Content/New">New Post</a>
             </div>
         }
-    </div>
-
-        <div class="side-bar">
-            <div class="side-container row-container" style="border: none;">
-                <a asp-page="/Account/Profil" asp-route-id="@CurrentProfil.Profil.Id"><img src="data:image;base64, @System.Convert.ToBase64String(CurrentProfil.Profil.Image)" height="35" width="35" style="border-radius: 50px; margin: 3px; margin-left: 10px" /></a>
-                <a asp-page="/Account/Profil" asp-route-id="@CurrentProfil.Profil.Id" style="margin-top: 13px; margin-left: 10px; font-weight: bold;">@CurrentProfil.Profil.UserName</a>
-                <a style="margin-top: 8px; margin-left: 8px" class="click-link" asp-page="/Content/New">New Post</a>
-            </div>
-
-            <div class="side-container">
-
-                <h1 class="bubble">Stories</h1>
-
-                <div class="column-container" style="margin-top: 15px">
-                    <p>i don´t add stories this is to complicated</p>
-                </div>
-            </div>
-
-            <div class="side-container">
-
-                <h1 class="bubble">Suggestions For You</h1>
-
-                <div class="column-container" style="margin-top: 15px">
-                    @foreach (var user in Model.Suggestions)
-                    {
-                        <a asp-page="/Account/Profil" asp-route-id="@user.Id" class="click-link">@user.UserName</a>
-                    }
-                </div>
-            </div>
+    }
+    else
+    {
+        <div class="content-container">
+            <p>nothing here... follow people or post by your self</p>
         </div>
-    </div>
+    }
+</div>
 

@@ -47,7 +47,7 @@ namespace InstaNet.Web.Pages.Account
 
                 if (user == null)
                 {
-                    Profil profil = new Profil
+                    Profile profile = new Profile
                     {
                         UserName = RegisterViewModel.UserName,
                         DisplayName = RegisterViewModel.UserName,
@@ -57,14 +57,14 @@ namespace InstaNet.Web.Pages.Account
                         Modified = DateTime.Now
                     };
 
-                    await repositoryContext.Profils.AddAsync(profil);
+                    await repositoryContext.Profiles.AddAsync(profile);
                     await repositoryContext.SaveChangesAsync();
 
                     ApplicationUser applicationUser = new ApplicationUser
                     {
                         Email = RegisterViewModel.Email,
                         UserName = RegisterViewModel.UserName,
-                        Profil = profil
+                        Profile = profile
                     };
 
                     var result = await this.userManager.CreateAsync(applicationUser, RegisterViewModel.Password);

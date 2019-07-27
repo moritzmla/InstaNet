@@ -13,8 +13,8 @@
         <div style="min-width: 335px; border: 1px solid rgba(0,0,0,.0975)">
 
             <div class="row-container" style="padding: 7px; border-bottom: 1px solid rgba(0,0,0,.0975)">
-                <img src="data:image;base64,@System.Convert.ToBase64String(Model.Post.Profil.Image)" height="35" width="35" style="border-radius: 50px; margin: 3px; margin-left: 10px" />
-                <a asp-page="/Account/Profil" asp-route-id="@Model.Post.Profil.Id">@Model.Post.Profil.UserName</a>
+                <img src="data:image;base64,@System.Convert.ToBase64String(Model.Post.Profile.Image)" height="35" width="35" style="border-radius: 50px; margin: 3px; margin-left: 10px" />
+                <a asp-page="/Account/Profile" asp-route-id="@Model.Post.Profile.Id">@Model.Post.Profile.UserName</a>
             </div>
 
             <div>
@@ -22,8 +22,8 @@
 
                     <div class="column-container" style="margin-top: 10px;">
                         <div class="row-container">
-                            <img src="data:image;base64,@System.Convert.ToBase64String(Model.Post.Profil.Image)" height="30" width="30" style="border-radius: 50px; margin-left: 18px" />
-                            <a style="margin-top: 7px;" asp-page="/Account/Profil" asp-route-id="@Model.Post.Profil.Id">@Model.Post.Profil.UserName</a>
+                            <img src="data:image;base64,@System.Convert.ToBase64String(Model.Post.Profile.Image)" height="30" width="30" style="border-radius: 50px; margin-left: 18px" />
+                            <a style="margin-top: 7px;" asp-page="/Account/Profile" asp-route-id="@Model.Post.Profile.Id">@Model.Post.Profile.UserName</a>
                             <p style="margin-top: 7px;">@Model.Post.Caption</p>
                         </div>
                     </div>
@@ -32,8 +32,8 @@
                     {
                         <div class="column-container" style="margin-top: 10px;">
                             <div class="row-container">
-                                <img src="data:image;base64,@System.Convert.ToBase64String(replay.Profil.Image)" height="30" width="30" style="border-radius: 50px; margin-left: 18px" />
-                                <a style="margin-top: 7px;" asp-page="/Account/Profil" asp-route-id="@replay.Profil.Id">@replay.Profil.UserName</a>
+                                <img src="data:image;base64,@System.Convert.ToBase64String(replay.Profile.Image)" height="30" width="30" style="border-radius: 50px; margin-left: 18px" />
+                                <a style="margin-top: 7px;" asp-page="/Account/Profile" asp-route-id="@replay.Profile.Id">@replay.Profile.UserName</a>
                                 <p style="margin-top: 7px;">@replay.Text</p>
                             </div>
                             <p style="color: lightgray; margin-left: 65px; margin-top: 5px; font-size: 12px">@replay.TimeAgo()</p>

@@ -5,7 +5,7 @@ using System.Text;
 
 namespace InstaNet.ApplicationCore.Entities
 {
-    public class Profil : BaseEntity
+    public class Profile : BaseEntity
     {
         private ICollection<Post> _posts;
         private ICollection<Replay> _replays;
@@ -13,13 +13,13 @@ namespace InstaNet.ApplicationCore.Entities
         private ICollection<Follow> _followers;
         private ICollection<Follow> _following;
 
-        public Profil()
+        public Profile()
         { 
         }
 
         private ILazyLoader LazyLoader { get; set; }
 
-        public Profil(ILazyLoader lazyLoader)
+        public Profile(ILazyLoader lazyLoader)
         {
             this.LazyLoader = lazyLoader;
         }

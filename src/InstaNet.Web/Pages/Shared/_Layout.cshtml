@@ -1,5 +1,9 @@
-﻿@using Microsoft.AspNetCore.Identity
+﻿
+@using Microsoft.AspNetCore.Identity
 @using InstaNet.DataAccess.Identity
+@using InstaNet.DataAccess.Data
+
+@inject RepositoryContext repositoryContext;
 @inject UserManager<ApplicationUser> UserManager
 
 @{
@@ -9,6 +13,8 @@
     {
         CurrentProfil = await UserManager.FindByNameAsync(User.Identity.Name);
     }
+
+    var Suggestions = this.repositoryContext.Profiles.OrderBy(x => Guid.NewGuid()).Take(5).ToList();
 }
 
 <!DOCTYPE html>
@@ -43,21 +49,69 @@
                     <div class="row-container">
                         <img src="~/Images/Explorer.png" alt="Explorer" height="36" width="40" />
                         <img src="~/images/Notification.png" alt="Notification" height="32" width="40" />
-                        <a asp-page="/Account/Profil" asp-route-id="@CurrentProfil.ProfilId"><img src="~/images/User.png" alt="User" height="34" width="40" /></a>
+                        <a asp-page="/Account/Profile" asp-route-id="@CurrentProfil.ProfileId"><img src="~/images/User.png" alt="User" height="34" width="40" /></a>
                     </div>
                 </div>
             }
         </div>
     </header>
 
-    <div class="main-container">
+    <div class="main-container row-container">
+
+        @if (User.Identity.IsAuthenticated)
+        {
+            <div class="side-bar">
+                <div class="side-container column-container">
+                    <div class="row-container">
+                        <a asp-page="/Account/Profile" asp-route-id="@CurrentProfil.Profile.Id"><img src="data:image;base64, @System.Convert.ToBase64String(CurrentProfil.Profile.Image)" height="45" width="45" style="border-radius: 50px; margin: 3px; margin-left: 10px" /></a>
+                        <a asp-page="/Account/Profile" asp-route-id="@CurrentProfil.Profile.Id" style="margin-top: 18px; margin-left: 12px; font-weight: bold;">@CurrentProfil.Profile.UserName</a>
+                    </div>
+
+                    <div class="row-container" style="margin-top: 10px">
+                        <p style="margin-right: 15px;"><strong>@CurrentProfil.Profile.Posts.Count</strong> posts</p>
+                        <p style="margin-right: 15px;"><strong>@CurrentProfil.Profile.Followers.Count</strong> followers</p>
+                        <p><strong >@CurrentProfil.Profile.Following.Count</strong> following</p>
+                    </div>
+                </div>
+            </div>
+        }
+
         <div class="column-container" style="width: 100%;">
             @RenderBody()
         </div>
+
+        @if (User.Identity.IsAuthenticated)
+        {
+            <div class="side-bar">
+                <div class="side-container">
+
+                    <h1 class="bubble">Stories</h1>
+
+                    <div class="column-container" style="margin-top: 15px">
+                        <p>i don´t add stories this is to complicated</p>
+                    </div>
+                </div>
+
+                <div class="side-container">
+
+                    <h1 class="bubble">Suggestions For You</h1>
+
+                    <div class="column-container" style="margin-top: 15px">
+                        @foreach (var user in Suggestions)
+                        {
+                            <a asp-page="/Account/Profile" asp-route-id="@user.Id" class="click-link">@user.UserName</a>
+                        }
+                    </div>
+                </div>
+            </div>
+        }
+
     </div>
 
     <footer>
-        <a href="https://github.com/cetoxx/InstaNet"><strong>InstaNet on Github</strong></a>
+        <a href=""><strong>Impressum</strong></a>
+        <a href=""><strong>InstaNet</strong></a>
+        <a href=""><strong>Github</strong></a>
     </footer>
 
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>

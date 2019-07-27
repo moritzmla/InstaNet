@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace InstaNet.Web.ViewModels
 {
-    public class ProfilViewModel
+    public class ProfileViewModel
     {
         public IFormFile Image { get; set; }
 

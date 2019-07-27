@@ -5,23 +5,23 @@
 }
 
 <div class="content-container" style="width: 100%; margin: auto; max-width: 350px">
-    <form method="post" enctype="multipart/form-data" asp-route-id="@Model.Profil.Id" asp-page-handler="Save">
+    <form method="post" enctype="multipart/form-data" asp-route-id="@Model.Profile.Id" asp-page-handler="Save">
         <div class="form-group">
             <label asp-for="ProfilViewModel.Image"></label>
             <label for="imageInput">
-                <img class="main-img" id="imageDisplay" src="data:image;base64,@System.Convert.ToBase64String(Model.Profil.Image)" alt="COVER" height="50" width="50" style="object-fit: scale-down; margin: 0px; border-radius: 50px;" />
+                <img class="main-img" id="imageDisplay" src="data:image;base64,@System.Convert.ToBase64String(Model.Profile.Image)" alt="COVER" height="50" width="50" style="object-fit: scale-down; margin: 0px; border-radius: 50px;" />
                 <input asp-for="ProfilViewModel.Image" id="imageInput" />
             </label>
         </div>
 
         <div class="form-group">
             <label asp-for="ProfilViewModel.DisplayName"></label>
-            <input asp-for="ProfilViewModel.DisplayName" value="@Model.Profil.DisplayName" />
+            <input asp-for="ProfilViewModel.DisplayName" value="@Model.Profile.DisplayName" />
         </div>
 
         <div class="form-group">
             <label asp-for="ProfilViewModel.Bio"></label>
-            <input asp-for="ProfilViewModel.Bio" value="@Model.Profil.Bio" />
+            <input asp-for="ProfilViewModel.Bio" value="@Model.Profile.Bio" />
         </div>
 
         <div class="form-group">

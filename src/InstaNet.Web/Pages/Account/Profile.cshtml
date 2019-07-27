@@ -1,0 +1,56 @@
+﻿@page "{id}"
+@model InstaNet.Web.Pages.Account.ProfileModel
+
+@using Microsoft.AspNetCore.Identity
+@using InstaNet.DataAccess.Identity
+@inject UserManager<ApplicationUser> UserManager
+
+@{
+    ViewData["Title"] = "Profile";
+    var CurrentProfile = await UserManager.FindByNameAsync(User.Identity.Name);
+}
+
+<div class="column-container" style="max-width: 935px;">
+    <div class="profil-container">
+        <a asp-page="/Account/Profile" asp-route-id="@Model.Profile.Id"><img class="profil-img" src="data:image;base64,@System.Convert.ToBase64String(Model.Profile.Image)" height="100" width="100" /></a>
+
+        <div class="column-container">
+            <div class="row-container">
+                <a style="font-size: 30px; font-weight: 100" asp-page="/Account/Profile" asp-route-id="@Model.Profile.Id">@Model.Profile.UserName</a>
+
+                @if (CurrentProfile.ProfileId == Model.Profile.Id)
+                {
+                    <a style="margin-left: 15px;" class="button-link" asp-page="/Account/Settings" asp-route-id="@Model.Profile.Id">Settings</a>
+                    <a style="margin-left: 15px; margin-top: 3px" class="click-link" asp-page="/Index" asp-page-handler="LogOut">LogOut</a>
+                }
+                else
+                {
+                    <a style="margin-left: 15px;" class="button-link" asp-page-handler="Follow" asp-route-id="@Model.Profile.Id">Follow</a>
+                }
+            </div>
+
+            <p style="margin-top: 15px;"><strong>@Model.Profile.DisplayName</strong></p>
+
+            <div class="row-container" style="margin-top: 20px;">
+                <p style="margin-right: 15px; font-size: 15px"><strong style="font-size: 15px">@Model.Profile.Posts.Count</strong> posts</p>
+                <p style="margin-right: 15px; font-size: 15px"><strong style="font-size: 15px">@Model.Profile.Followers.Count</strong> followers</p>
+                <p style="font-size: 15px"><strong style="font-size: 15px">@Model.Profile.Following.Count</strong> following</p>
+            </div>
+
+            <p style="margin-top: 20px;">@Model.Profile.Bio</p>
+        </div>
+    </div>
+
+    <hr style="margin-top: 50px; margin-bottom: 25px;" />
+
+
+    <div class="img-container">
+        @foreach (var post in Model.Profile.Posts)
+        {
+            <div class="post-img">
+                <a asp-page="/Content/Details" asp-route-id="@post.Id"><img src="data:image;base64,@System.Convert.ToBase64String(post.Pictures.First().File)" /></a>
+            </div>
+        }
+    </div>
+</div>
+

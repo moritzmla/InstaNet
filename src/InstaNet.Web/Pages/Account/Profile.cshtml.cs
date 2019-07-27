@@ -13,23 +13,23 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 namespace InstaNet.Web.Pages.Account
 {
     [Authorize]
-    public class ProfilModel : PageModel
+    public class ProfileModel : PageModel
     {
         private readonly RepositoryContext repositoryContext;
         private readonly UserManager<ApplicationUser> userManager;
 
-        public ProfilModel(RepositoryContext repositoryContext, UserManager<ApplicationUser> userManager)
+        public ProfileModel(RepositoryContext repositoryContext, UserManager<ApplicationUser> userManager)
         {
             this.repositoryContext = repositoryContext;
             this.userManager = userManager;
         }
 
         [BindProperty]
-        public Profil Profil { get; set; }
+        public Profile Profile { get; set; }
 
         public async Task<IActionResult> OnGet(string id)
         {
-            this.Profil = await this.repositoryContext.Profils.FindAsync(Guid.Parse(id));
+            this.Profile = await this.repositoryContext.Profiles.FindAsync(Guid.Parse(id));
             return Page();
         }
 
@@ -37,8 +37,8 @@ namespace InstaNet.Web.Pages.Account
         {
             var currentUser = await this.userManager.FindByNameAsync(User.Identity.Name);
 
-            var result = currentUser.Profil.Following
-                .FirstOrDefault(x => x.FollowingId == currentUser.ProfilId && x.FollowerId == Guid.Parse(id));
+            var result = currentUser.Profile.Following
+                .FirstOrDefault(x => x.FollowingId == currentUser.ProfileId && x.FollowerId == Guid.Parse(id));
 
             if (result == null)
             {
@@ -46,7 +46,7 @@ namespace InstaNet.Web.Pages.Account
                 {
                     Id = Guid.NewGuid(),
                     FollowerId = Guid.Parse(id),
-                    FollowingId = currentUser.ProfilId,
+                    FollowingId = currentUser.ProfileId,
                 });
             } else
             {

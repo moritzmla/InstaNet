@@ -11,7 +11,7 @@ namespace InstaNet.DataAccess.Data
 {
     public class RepositoryContext : IdentityDbContext<ApplicationUser>
     {
-        public DbSet<Profil> Profils { get; set; }
+        public DbSet<Profile> Profiles { get; set; }
         public DbSet<Post> Posts { get; set; }
         public DbSet<Picture> Pictures { get; set; }
         public DbSet<Video> Videos { get; set; }
@@ -29,7 +29,7 @@ namespace InstaNet.DataAccess.Data
             base.OnModelCreating(modelBuilder);
 
             modelBuilder.Entity<ApplicationUser>(ConfigurateApplicationUser);
-            modelBuilder.Entity<Profil>(ConfigurateProfil);
+            modelBuilder.Entity<Profile>(ConfigurateProfile);
             modelBuilder.Entity<Post>(ConfiguratePost);
             modelBuilder.Entity<Picture>(ConfiguratePicture);
             modelBuilder.Entity<Video>(ConfigurateVideo);
@@ -38,22 +38,22 @@ namespace InstaNet.DataAccess.Data
 
         private void ConfigurateApplicationUser(EntityTypeBuilder<ApplicationUser> builder)
         {
-            builder.HasOne(x => x.Profil)
+            builder.HasOne(x => x.Profile)
                 .WithOne();
         }
 
-        private void ConfigurateProfil(EntityTypeBuilder<Profil> builder)
+        private void ConfigurateProfile(EntityTypeBuilder<Profile> builder)
         {
             builder.Property(x => x.Created).HasDefaultValue(DateTime.Now);
             builder.Property(x => x.Modified).HasDefaultValue(DateTime.Now);
 
             builder.HasMany(x => x.Replays)
-                .WithOne(x => x.Profil)
-                .HasForeignKey(x => x.ProfilId);
+                .WithOne(x => x.Profile)
+                .HasForeignKey(x => x.ProfileId);
 
             builder.HasMany(x => x.Likes)
-                .WithOne(x => x.Profil)
-                .HasForeignKey(x => x.ProfilId);
+                .WithOne(x => x.Profile)
+                .HasForeignKey(x => x.ProfileId);
 
             builder.HasMany(x => x.Followers)
                 .WithOne(x => x.Follower)
@@ -64,8 +64,8 @@ namespace InstaNet.DataAccess.Data
                 .HasForeignKey(x => x.FollowingId);
 
             builder.HasMany(x => x.Posts)
-                .WithOne(x => x.Profil)
-                .HasForeignKey(x => x.ProfilId);
+                .WithOne(x => x.Profile)
+                .HasForeignKey(x => x.ProfileId);
         }
 
         private void ConfiguratePost(EntityTypeBuilder<Post> builder)
