@@ -8,7 +8,7 @@ You need the .NET Core 2.2 SDK (Download: https://dotnet.microsoft.com/download)
 - Login/Register System
 - Comments
 - Posts
-- Like Users
+- Like Posts
 - Follow Users
   
 # Images
