@@ -1,23 +1,18 @@
 ﻿@page
 @model InstaNet.Web.Pages.Content.NewModel
 
-@using Microsoft.AspNetCore.Identity
-@using InstaNet.DataAccess.Identity
-@inject UserManager<ApplicationUser> UserManager
-
 @{
     ViewData["Title"] = "New";
-    var CurrentProfile = await UserManager.FindByNameAsync(User.Identity.Name);
 }
 
 <div class="post-container">
     <div class="column-container">
         <div class="row-container" style="padding: 7px; border: 1px solid rgba(0,0,0,.0975)">
-            <a style="margin-top: 0px" asp-page="/Account/Profile" asp-route-id="@CurrentProfile.Profile.Id"><img src="data:image;base64,@System.Convert.ToBase64String(CurrentProfile.Profile.Image)" height="35" width="35" style="border-radius: 50px; margin: 3px; margin-left: 10px" /></a>
-            <a asp-page="/Account/Profile" asp-route-id="@CurrentProfile.Profile.Id">@CurrentProfile.Profile.UserName</a>
+            <a style="margin-top: 0px" asp-page="/Account/Profile" asp-route-id="@User.Identity.GetProfileId()"><img src="data:image;base64,@User.Identity.GetProfileImage()" height="35" width="35" style="border-radius: 50px; margin: 3px; margin-left: 10px" /></a>
+            <a asp-page="/Account/Profile" asp-route-id="@User.Identity.GetProfileId()">@User.Identity.GetProfileName()</a>
         </div>
 
-        <form method="post" asp-route-id="@CurrentProfile.ProfileId" asp-page-handler="New" enctype="multipart/form-data" style="margin: 0px;">
+        <form method="post" asp-route-id="@User.Identity.GetProfileId()" asp-page-handler="New" enctype="multipart/form-data" style="margin: 0px;">
             <div class="column-container" style="margin: 0px;">
                 <label for="imageInput" style="margin: 0px;">
                     <img class="main-img" id="imageDisplay" src="~/images/Select.png" alt="COVER" style="margin: 0px;" />

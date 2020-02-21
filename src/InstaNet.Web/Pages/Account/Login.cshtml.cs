@@ -1,12 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using InstaNet.DataAccess.Identity;
+﻿using InstaNet.DataAccess.Identity;
 using InstaNet.Web.ViewModels;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
+using System.Threading.Tasks;
 
 namespace InstaNet.Web.Pages.Account
 {
@@ -47,13 +44,14 @@ namespace InstaNet.Web.Pages.Account
 
                     if (result.Succeeded)
                     {
-                        Console.WriteLine("succ");
                         return RedirectToPage("/Index");
-                    } else
+                    }
+                    else
                     {
                         ModelState.AddModelError("", "Something dosen´t work");
                     }
-                } else
+                }
+                else
                 {
                     ModelState.AddModelError("", "User not exists");
                 }

@@ -1,17 +1,15 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using InstaNet.ApplicationCore.Entities;
+﻿using InstaNet.ApplicationCore.Entities;
 using InstaNet.DataAccess.Data;
 using InstaNet.DataAccess.Identity;
 using InstaNet.Web.ViewModels;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
+using System;
 using System.IO;
-using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Authorization;
+using System.Threading.Tasks;
 
 namespace InstaNet.Web.Pages.Content
 {
@@ -47,7 +45,7 @@ namespace InstaNet.Web.Pages.Content
                     Created = DateTime.Now,
                     Modified = DateTime.Now
                 };
-                
+
                 await this.repositoryContext.Posts.AddAsync(post);
 
                 var picture = await this.repositoryContext.Pictures.AddAsync(new Picture

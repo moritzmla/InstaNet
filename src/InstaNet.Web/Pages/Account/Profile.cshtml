@@ -1,13 +1,8 @@
 ﻿@page "{id}"
 @model InstaNet.Web.Pages.Account.ProfileModel
 
-@using Microsoft.AspNetCore.Identity
-@using InstaNet.DataAccess.Identity
-@inject UserManager<ApplicationUser> UserManager
-
 @{
     ViewData["Title"] = "Profile";
-    var CurrentProfile = await UserManager.FindByNameAsync(User.Identity.Name);
 }
 
 <div class="column-container" style="max-width: 935px;">
@@ -18,7 +13,7 @@
             <div class="row-container">
                 <a style="font-size: 30px; font-weight: 100" asp-page="/Account/Profile" asp-route-id="@Model.Profile.Id">@Model.Profile.UserName</a>
 
-                @if (CurrentProfile.ProfileId == Model.Profile.Id)
+                @if (User.Identity.GetProfileId() == Model.Profile.Id)
                 {
                     <a style="margin-left: 15px;" class="button-link" asp-page="/Account/Settings" asp-route-id="@Model.Profile.Id">Settings</a>
                     <a style="margin-left: 15px; margin-top: 3px" class="click-link" asp-page="/Index" asp-page-handler="LogOut">LogOut</a>

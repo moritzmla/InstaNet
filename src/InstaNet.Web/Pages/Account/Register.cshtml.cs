@@ -1,14 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using InstaNet.ApplicationCore.Entities;
+﻿using InstaNet.ApplicationCore.Entities;
 using InstaNet.DataAccess.Data;
 using InstaNet.DataAccess.Identity;
 using InstaNet.Web.ViewModels;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
+using System;
+using System.Threading.Tasks;
 
 namespace InstaNet.Web.Pages.Account
 {
@@ -73,7 +71,8 @@ namespace InstaNet.Web.Pages.Account
                     {
                         await this.signInManager.PasswordSignInAsync(applicationUser, RegisterViewModel.Password, true, true);
                         return RedirectToPage("/Index");
-                    } else
+                    }
+                    else
                     {
                         ModelState.AddModelError("", "Something dosen´t work");
                     }

@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using InstaNet.ApplicationCore.Entities;
+﻿using InstaNet.ApplicationCore.Entities;
 using InstaNet.DataAccess.Data;
 using InstaNet.DataAccess.Identity;
 using Microsoft.AspNetCore.Authentication;
@@ -10,6 +6,10 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
 
 namespace InstaNet.Web.Pages
 {
@@ -75,7 +75,8 @@ namespace InstaNet.Web.Pages
                     PostId = Guid.Parse(id),
                     ProfileId = currentUser.Profile.Id
                 });
-            } else
+            }
+            else
             {
                 this.repositoryContext.Likes.Remove(result);
             }

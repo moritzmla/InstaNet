@@ -1,7 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore.Infrastructure;
-using System;
 using System.Collections.Generic;
-using System.Text;
 
 namespace InstaNet.ApplicationCore.Entities
 {
@@ -14,7 +12,7 @@ namespace InstaNet.ApplicationCore.Entities
         private ICollection<Follow> _following;
 
         public Profile()
-        { 
+        {
         }
 
         private ILazyLoader LazyLoader { get; set; }

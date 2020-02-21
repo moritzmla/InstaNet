@@ -2,7 +2,6 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace InstaNet.DataAccess.Data
@@ -60,7 +59,7 @@ namespace InstaNet.DataAccess.Data
         private static IList<Picture> GetSeedPictures()
         {
             var seedList = new List<Picture>
-            { 
+            {
                 new Picture
                 {
                     File = File.ReadAllBytes(".//wwwroot//Images//Sample.jpg"),

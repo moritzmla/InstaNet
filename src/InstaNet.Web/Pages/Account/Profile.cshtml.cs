@@ -1,14 +1,13 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using InstaNet.ApplicationCore.Entities;
+﻿using InstaNet.ApplicationCore.Entities;
 using InstaNet.DataAccess.Data;
 using InstaNet.DataAccess.Identity;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
+using System;
+using System.Linq;
+using System.Threading.Tasks;
 
 namespace InstaNet.Web.Pages.Account
 {
@@ -48,14 +47,15 @@ namespace InstaNet.Web.Pages.Account
                     FollowerId = Guid.Parse(id),
                     FollowingId = currentUser.ProfileId,
                 });
-            } else
+            }
+            else
             {
                 this.repositoryContext.Follows.Remove(result);
             }
 
             await this.repositoryContext.SaveChangesAsync();
 
-            return RedirectToPage("/Account/Profil", new { Id = id });
+            return RedirectToPage("/Account/Profile", new { Id = id });
         }
     }
 }

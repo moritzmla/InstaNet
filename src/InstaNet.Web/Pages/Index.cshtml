@@ -1,4 +1,4 @@
-﻿@page
+﻿@page 
 @model InstaNet.Web.Pages.IndexModel
 
 @using Microsoft.AspNetCore.Identity
@@ -12,7 +12,6 @@
     ViewData["Title"] = "Index";
 
     var CurrentProfil = await UserManager.FindByNameAsync(User.Identity.Name);
-
     var Suggestions = this.repositoryContext.Profiles.OrderBy(x => Guid.NewGuid()).Take(5).ToList();
 }
 
@@ -25,34 +24,34 @@
     {
         @foreach (var post in Model.Timeline.OrderBy(x => x.Created))
         {
-            <div class="post-container">
+            <div class="post-container" style="border: 1px solid rgba(0,0,0,.0975);">
+
                 <div class="column-container">
+                    <div class="row-container">
+                        <a style="margin-top: 2px" asp-page="/Account/Profil" asp-route-id="@post.Profile.Id"><img src="data:image;base64,@System.Convert.ToBase64String(post.Profile.Image)" height="40" width="40" style="border-radius: 50px; margin: 3px; margin-left: 10px" /></a>
+                        <div class="column-container">
+                            <div class="row-container">
+                                <a style="margin-top: 8px; margin-left: 15px;" asp-page="/Account/Profil" asp-route-id="@post.Profile.Id">@post.Profile.UserName</a>
+                                <p style="margin-top: 8px;">•</p>
+                                <p style="margin-top: 8px;">@post.TimeAgo()</p>
+                            </div>
+                            <p style="margin-left: 15px; margin-top: 5px">@post.Caption</p>
+                        </div>
+                    </div>
+
                     <div class="column-container">
                         <img class="main-img" src="data:image;base64,@System.Convert.ToBase64String(post.Pictures.First().File)" />
                     </div>
 
-                    <div style="border: 1px solid rgba(0,0,0,.0975); padding: 3px;">
-                        <div class="row-container">
-                            <a style="margin-top: 2px" asp-page="/Account/Profil" asp-route-id="@post.Profile.Id"><img src="data:image;base64,@System.Convert.ToBase64String(post.Profile.Image)" height="40" width="40" style="border-radius: 50px; margin: 3px; margin-left: 10px" /></a>
-                            <div class="column-container">
-                                <div class="row-container">
-                                    <a style="margin-top: 8px; margin-left: 15px;" asp-page="/Account/Profil" asp-route-id="@post.Profile.Id">@post.Profile.UserName</a>
-                                    <p style="margin-top: 8px;">•</p>
-                                    <p style="margin-top: 8px;">@post.TimeAgo()</p>
-                                </div>
-                                <p style="margin-left: 15px; margin-top: 5px">@post.Caption</p>
-                            </div>
-                        </div>
+  
+                    <div class="row-container" style="padding: 3px;">
+                        <a style="margin-top: 7px" class="click-link" asp-page-handler="Like" asp-route-id="@post.Id"><strong>@post.Likes.Count</strong> Likes</a>
+                        <a asp-page="/Content/Details" asp-route-id="@post.Id" style="color: gray; font-weight: 100; margin-top: 12px; margin-left: 10px;">@post.Replays.Count Comments</a>
 
-                        <div class="row-container">
-                            <a style="margin-top: 7px" class="click-link" asp-page-handler="Like" asp-route-id="@post.Id"><strong>@post.Likes.Count</strong> Likes</a>
-                            <a asp-page="/Content/Details" asp-route-id="@post.Id" style="color: gray; font-weight: 100; margin-top: 12px; margin-left: 10px;">@post.Replays.Count Comments</a>
-
-                            <form class="row-container" method="post" asp-page-handler="Replay" asp-route-id="@post.Id" style="margin-left: 10px;">
-                                <input asp-for="Replay.Text" placeholder="Add a comment..." style="background-color: #F0F0F0; border: none; width: 390px; text-align: left; padding: 9px;" />
-                                <button class="click-link" style="margin-left: 28px;">Post</button>
-                            </form>
-                        </div>
+                        <form class="row-container" method="post" asp-page-handler="Replay" asp-route-id="@post.Id" style="margin-left: 10px;">
+                            <input asp-for="Replay.Text" placeholder="Add a comment..." style="background-color: #F0F0F0; border: none; width: 390px; text-align: left; padding: 9px;" />
+                            <button class="click-link" style="margin-left: 28px;">Post</button>
+                        </form>
                     </div>
                 </div>
             </div>

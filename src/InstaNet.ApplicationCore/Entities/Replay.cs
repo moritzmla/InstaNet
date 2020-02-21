@@ -1,7 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore.Infrastructure;
 using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace InstaNet.ApplicationCore.Entities
 {
@@ -19,7 +17,7 @@ namespace InstaNet.ApplicationCore.Entities
 
         public Replay(ILazyLoader lazyLoader)
         {
-            this.LazyLoader = lazyLoader; 
+            this.LazyLoader = lazyLoader;
         }
 
         public string Text { get; set; }

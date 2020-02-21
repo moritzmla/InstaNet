@@ -1,7 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore.Infrastructure;
 using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace InstaNet.ApplicationCore.Entities
 {
@@ -24,7 +22,8 @@ namespace InstaNet.ApplicationCore.Entities
         public byte[] File { get; set; }
 
         public Guid? PostId { get; set; }
-        public Post Post {
+        public Post Post
+        {
             get => this.LazyLoader.Load(this, ref _post);
             set => _post = value;
         }
